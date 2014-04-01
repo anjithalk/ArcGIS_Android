@@ -1,17 +1,26 @@
 package com.example.deneme;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
+import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.MapView;
 import com.esri.android.map.ags.ArcGISDynamicMapServiceLayer;
 import com.esri.android.map.ags.ArcGISTiledMapServiceLayer;
+import com.esri.android.map.event.OnLongPressListener;
+import com.esri.core.geometry.Envelope;
+import com.esri.core.geometry.Point;
+import com.esri.core.map.Graphic;
+import com.esri.core.symbol.PictureMarkerSymbol;
 
 
 public class ArcgisDenemeActivity extends Activity {
@@ -34,7 +43,6 @@ public class ArcgisDenemeActivity extends Activity {
 		ArcGISTiledMapServiceLayer tl = new ArcGISTiledMapServiceLayer(
 				"http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
 		mMapView.addLayer(tl);
-		
 		int[] layers = { 0,1,2 };
 
 		GungorenMap = new ArcGISDynamicMapServiceLayer("http://81.215.201.236/arcgis/rest/services/AnkaraTest/AnkaraTest/MapServer",layers);
@@ -64,6 +72,32 @@ public class ArcgisDenemeActivity extends Activity {
 		});
 	    // Menu Button
 
+	    final GraphicsLayer graphicsLayer = new GraphicsLayer(mMapView.getSpatialReference(), new Envelope(-180, -90, 180, 90));
+	    mMapView.addLayer(graphicsLayer);
+
+	    mMapView.setOnLongPressListener(new OnLongPressListener() {
+			
+			public boolean onLongPress(float x, float y) {
+				graphicsLayer.removeAll();
+				Drawable d = getResources().getDrawable(R.drawable.icon);
+			    PictureMarkerSymbol sym = new PictureMarkerSymbol(d);
+			    int[]location = {(int)x,(int)y};
+			    mMapView.getLocationOnScreen(location);
+			    Log.e("x", Double.toString(mMapView.toMapPoint(x, y).getX()));
+			    Log.e("y", Double.toString(mMapView.toMapPoint(x, y).getY()));
+			    Point p = new Point(mMapView.toMapPoint(x, y).getX(),mMapView.toMapPoint(x, y).getY());
+			    //sym.setOffsetY(50);
+			    Graphic g = new Graphic(p, sym);
+			    graphicsLayer.addGraphic(g);
+				
+				Intent i = new Intent(getApplicationContext(), PanoActivity.class);
+				startActivity(i);
+				
+				return false;
+			}
+		});
+
+	    
     }
 
     public void onClick(View v){

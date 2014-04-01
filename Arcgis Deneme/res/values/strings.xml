@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Arcgis Deneme</string>
     <string name="hello">Hello World, ArcgisDenemeActivity!</string>
+    <string name="title_activity_panorama">PanoramaActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_pano">PanoActivity</string>
+
 </resources>
