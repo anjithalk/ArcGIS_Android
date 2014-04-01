@@ -1,6 +1,6 @@
 {
     "urlBase": "res://raw",
-    "type": "spherical",
+    "type": "spherical2",
     "keep": "all",
     "divisions":
     {
@@ -9,7 +9,6 @@
     },
     "images":
     {
-        "preview": "quito1_sp",
         "image": "quito1_s"
     },
     "camera":

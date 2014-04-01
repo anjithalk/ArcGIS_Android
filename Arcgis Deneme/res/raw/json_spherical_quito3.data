@@ -1,10 +1,9 @@
 {
     "urlBase": "res://raw",
-    "type": "spherical",
+    "type": "spherical2",
     "keep": "all",
     "images":
     {
-        "preview": "quito3_sp",
         "image": "quito3_s"
     },
     "camera":
